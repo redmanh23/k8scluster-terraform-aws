@@ -1,0 +1,96 @@
+---
+systemd:
+  units:
+    - name: locksmithd.service
+      dropins:
+        - name: 40-etcd-lock.conf
+          contents: |
+            [Service]
+            Environment="REBOOT_STRATEGY=off"
+    - name: var-lib.mount
+      enable: true
+      contents: |
+        [Unit]
+        Description=Mount docker-disk to /var/lib
+        Before=local-fs.target
+        [Mount]
+        What=/dev/xvdb
+        Where=/var/lib
+        Type=ext4
+        [Install]
+        WantedBy=local-fs.target
+
+    - name: docker.service
+      dropins:
+        - name: 10-wait-docker.conf
+          contents: |
+            [Unit]
+            After=var-lib.mount
+            Requires=var-lib.mount
+    - name: update-keys.service
+      enabled: true
+      contents: |
+        [Install]
+        WantedBy=multi-user.target
+
+        [Unit]
+        Description=Update ssh keys
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        Type=oneshot
+        ExecStart=/opt/scripts/update-keys.sh
+    - name: cluster-setup.service
+      enabled: true
+      contents: |
+        [Install]
+        WantedBy=multi-user.target
+
+        [Unit]
+        Description=Initialize or join k8s cluster
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        Type=oneshot
+        ExecStart=/opt/scripts/k8s-install.sh
+
+storage:
+  filesystems:
+    - name: docker-disk
+      mount:
+        device: /dev/xvdb
+        format: ext4
+        label: docker-disk
+        wipe_filesystem: false
+  files:
+    - path: /etc/hostname
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: k8sworker01
+    - path: /opt/scripts/k8s-install.sh
+      filesystem: root
+      mode: 0777
+      contents:
+        remote:
+          url: http://10.50.7.144/mount/k8s/install-wkr.sh
+    - path: /home/core/.ssh/coreos-key
+      filesystem: root
+      mode: 0400
+      contents:
+        remote:
+          url: http://10.50.7.144/mount/k8s/coreos-key
+    - path: /opt/authorized_keys
+      filesystem: root
+      mode: 0550
+      contents:
+        remote:
+          url: http://10.50.7.144/mount/cluster-aws/authorized_keys
+    - path: /opt/scripts/update-keys.sh
+      filesystem: root
+      mode: 0777
+      contents:
+        remote:
+          url: http://10.50.7.144/mount/cluster-aws/update-keys.sh

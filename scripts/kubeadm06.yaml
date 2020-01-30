@@ -1,0 +1,12 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: JoinConfiguration
+discovery:
+  bootstrapToken:
+    token: $TOKEN
+    apiServerEndpoint: "10.50.1.39:6443"
+    caCertHashes:
+      - $CACERT_HASH
+nodeRegistration:
+  name: ip-10-50-1-231.ec2.internal
+  kubeletExtraArgs:
+    cloud-provider: aws
