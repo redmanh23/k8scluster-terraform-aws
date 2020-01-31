@@ -7,6 +7,10 @@ variable "key_name" {
     description = "key pair name"
 }
 
+variable "iam_profile" {
+    description = "IAM role"
+}
+
 variable "ami" {
   description = "CoreOS AMI"
   default = "ami-000c6a6ff12707589"

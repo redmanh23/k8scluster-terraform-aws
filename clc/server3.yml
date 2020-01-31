@@ -27,20 +27,6 @@ systemd:
             [Unit]
             After=var-lib.mount
             Requires=var-lib.mount
-    - name: update-keys.service
-      enabled: true
-      contents: |
-        [Install]
-        WantedBy=multi-user.target
-
-        [Unit]
-        Description=Update ssh keys
-        After=network-online.target
-        Wants=network-online.target
-
-        [Service]
-        Type=oneshot
-        ExecStart=/opt/scripts/update-keys.sh
     - name: cluster-setup.service
       enabled: true
       contents: |
@@ -74,28 +60,16 @@ storage:
       mode: 0777
       contents:
         remote:
-          url: http://10.50.7.144/mount/k8s/install-mgr3.sh
+          url: http://172.31.85.216/install-mgr3.sh
     - path: /home/core/.ssh/coreos-key
       filesystem: root
       mode: 0400
       contents:
         remote:
-          url: http://10.50.7.144/mount/k8s/coreos-key
+          url: http://172.31.85.216/coreos-key
     - path: /opt/configs/kube-controller-manager.yaml
       filesystem: root
       mode: 0600
       contents:
         remote:
-          url: http://10.50.7.144/mount/k8s/kube-controller-manager.yaml
-    - path: /opt/authorized_keys
-      filesystem: root
-      mode: 0550
-      contents:
-        remote:
-          url: http://10.50.7.144/mount/cluster-aws/authorized_keys
-    - path: /opt/scripts/update-keys.sh
-      filesystem: root
-      mode: 0777
-      contents:
-        remote:
-          url: http://10.50.7.144/mount/cluster-aws/update-keys.sh
+          url: http://172.31.85.216/kube-controller-manager.yaml

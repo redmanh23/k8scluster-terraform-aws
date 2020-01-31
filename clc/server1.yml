@@ -74,22 +74,22 @@ storage:
       mode: 0550
       contents:
         remote:
-          url: http://10.50.7.144/mount/k8s/install-mgr1.sh
+          url: http://172.31.85.216/install-mgr1.sh
     - path: /opt/configs/kube-controller-manager.yaml
       filesystem: root
       mode: 0600
       contents:
         remote:
-          url: http://10.50.7.144/mount/k8s/kube-controller-manager.yaml
+          url: http://172.31.85.216/kube-controller-manager.yaml
     - path: /opt/authorized_keys
       filesystem: root
       mode: 0550
       contents:
         remote:
-          url: http://10.50.7.144/mount/cluster-aws/authorized_keys
+          url: http://172.31.85.216/authorized_keys
     - path: /opt/scripts/update-keys.sh
       filesystem: root
       mode: 0777
       contents:
         remote:
-          url: http://10.50.7.144/mount/cluster-aws/update-keys.sh
+          url: http://172.31.85.216/update-keys.sh
