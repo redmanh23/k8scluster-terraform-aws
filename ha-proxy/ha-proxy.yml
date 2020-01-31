@@ -1,0 +1,22 @@
+version: "3.6"
+
+networks:
+  backend:
+
+configs:
+  proxy_config:
+    file: ./haproxy.cfg
+
+
+services:
+
+  proxy:
+    image: haproxy:2.0
+    ports:
+      - "81:80"
+      - "6443:6443"
+    networks:
+      - backend
+    configs:
+      - source: proxy_config
+        target: /usr/local/etc/haproxy/haproxy.cfg

@@ -19,14 +19,16 @@ variable "instance_type" {
 
 variable "subnet_id" {
   description = "Subnet ID"
-  default = "subnet-23d1806a"
+  default = "subnet-e1b39bcf"
 }
 
 variable "instance_ips" {
   default = {
-    "0" = "10.50.1.201"
-    "1" = "10.50.1.211"
-    "2" = "10.50.1.221"
-    "3" = "10.50.1.231"
+    "0" = "172.31.85.10"
+    "1" = "172.31.85.20"
+    "2" = "172.31.85.30"
+    "3" = "172.31.85.40"
+    "4" = "172.31.85.50"
+    "5" = "172.31.85.60"
   }
 }
