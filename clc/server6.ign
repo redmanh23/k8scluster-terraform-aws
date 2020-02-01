@@ -15,7 +15,7 @@
         "filesystem": "root",
         "path": "/etc/hostname",
         "contents": {
-          "source": "data:,ip-10-50-1-231.ec2.internal",
+          "source": "data:,k8sworker03",
           "verification": {}
         },
         "mode": 420
@@ -24,7 +24,7 @@
         "filesystem": "root",
         "path": "/opt/scripts/k8s-install.sh",
         "contents": {
-          "source": "http://10.50.7.144/mount/k8s/install-wkr.sh",
+          "source": "http://172.31.85.216/install-wkr.sh",
           "verification": {}
         },
         "mode": 511
@@ -33,37 +33,10 @@
         "filesystem": "root",
         "path": "/home/core/.ssh/coreos-key",
         "contents": {
-          "source": "http://10.50.7.144/mount/k8s/coreos-key",
+          "source": "http://172.31.85.216/coreos-key",
           "verification": {}
         },
         "mode": 256
-      },
-      {
-        "filesystem": "root",
-        "path": "/opt/configs/kubeadm-tmpl.yaml",
-        "contents": {
-          "source": "http://10.50.7.144/mount/k8s/kubeadm04.yaml",
-          "verification": {}
-        },
-        "mode": 384
-      },
-      {
-        "filesystem": "root",
-        "path": "/opt/authorized_keys",
-        "contents": {
-          "source": "http://10.50.7.144/mount/cluster-aws/authorized_keys",
-          "verification": {}
-        },
-        "mode": 360
-      },
-      {
-        "filesystem": "root",
-        "path": "/opt/scripts/update-keys.sh",
-        "contents": {
-          "source": "http://10.50.7.144/mount/cluster-aws/update-keys.sh",
-          "verification": {}
-        },
-        "mode": 511
       }
     ],
     "filesystems": [
@@ -79,15 +52,6 @@
   },
   "systemd": {
     "units": [
-      {
-        "dropins": [
-          {
-            "contents": "[Service]\nEnvironment=\"KUBELET_EXTRA_ARGS=--cloud-provider=aws\"\n",
-            "name": "20-cloud-provider.conf"
-          }
-        ],
-        "name": "kubelet.service"
-      },
       {
         "dropins": [
           {
@@ -110,11 +74,6 @@
           }
         ],
         "name": "docker.service"
-      },
-      {
-        "contents": "[Install]\nWantedBy=multi-user.target\n\n[Unit]\nDescription=Update ssh keys\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/opt/scripts/update-keys.sh\n",
-        "enabled": true,
-        "name": "update-keys.service"
       },
       {
         "contents": "[Install]\nWantedBy=multi-user.target\n\n[Unit]\nDescription=Initialize or join k8s cluster\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/opt/scripts/k8s-install.sh\n",

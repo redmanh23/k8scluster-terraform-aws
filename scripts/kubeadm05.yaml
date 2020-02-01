@@ -3,10 +3,10 @@ kind: JoinConfiguration
 discovery:
   bootstrapToken:
     token: $TOKEN
-    apiServerEndpoint: "10.50.1.39:6443"
+    apiServerEndpoint: "172.31.85.216:6443"
     caCertHashes:
       - $CACERT_HASH
 nodeRegistration:
-  name: ip-10-50-1-231.ec2.internal
+  name: ip-172-31-85-50.ec2.internal
   kubeletExtraArgs:
     cloud-provider: aws

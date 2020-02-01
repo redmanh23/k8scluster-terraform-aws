@@ -28,7 +28,7 @@ systemctl enable --now kubelet
 echo "Deploying Kubernetes (with AWS)..."
 export PATH=$PATH:/opt/bin
 
-ENTRY="10.50.1.231 $HOSTNAME"
+ENTRY="172.31.85.50 $HOSTNAME"
 echo $ENTRY >> /etc/hosts
 
 mkdir -p /opt/cluster-join
@@ -36,8 +36,8 @@ while true
     do
 	    echo "Waiting for first Cluster master to be initialized..."
 		sleep 20
-        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@10.50.1.201:/opt/cluster-join/token /opt/cluster-join/
-        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@10.50.1.201:/opt/cluster-join/cacert-hash /opt/cluster-join/
+        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@172.31.85.10:/opt/cluster-join/token /opt/cluster-join/
+        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@172.31.85.10:/opt/cluster-join/cacert-hash /opt/cluster-join/
 
         FILE=/opt/cluster-join/token
         if test -f "$FILE"; then

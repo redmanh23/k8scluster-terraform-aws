@@ -4,7 +4,7 @@ apiServer:
   extraArgs:
     cloud-provider: aws
 clusterName: kubernetes
-controlPlaneEndpoint: 10.50.1.39:6443
+controlPlaneEndpoint: 172.31.85.216:6443
 controllerManager:
   extraArgs:
     cloud-provider: aws

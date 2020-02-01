@@ -26,7 +26,7 @@ curl -sSL "https://raw.githubusercontent.com/kubernetes/kubernetes/${RELEASE}/bu
 ##Enable and start kubelet
 systemctl enable --now kubelet
 
-ENTRY="10.50.1.201 $HOSTNAME"
+ENTRY="172.31.85.10 $HOSTNAME"
 echo $ENTRY >> /etc/hosts
 echo "Deploying Kubernetes (with AWS)..."
 
@@ -51,7 +51,7 @@ openssl x509 -in /etc/kubernetes/pki/ca.crt  -noout -pubkey | openssl rsa -pubin
 
 chown -R core:core /opt/cluster-join
 
-sudo -u core kubectl taint nodes --all node-role.kubernetes.io/master-
+#sudo -u core kubectl taint nodes --all node-role.kubernetes.io/master-
 /opt/get_helm.sh
 sudo -u core helm install aws-ebs-csi-driver \
     --set enableVolumeScheduling=true \

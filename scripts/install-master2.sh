@@ -28,7 +28,7 @@ systemctl enable --now kubelet
 echo "Deploying Kubernetes (with AWS)..."
 export PATH=$PATH:/opt/bin
 
-ENTRY="10.50.1.211 $HOSTNAME"
+ENTRY="172.31.85.20 $HOSTNAME"
 echo $ENTRY >> /etc/hosts
 
 mkdir -p /opt/cluster-join
@@ -36,9 +36,9 @@ while true
     do
 	    echo "Waiting for first Cluster master to be initialized..."
 		sleep 20
-        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@10.50.1.201:/opt/cluster-join/token /opt/cluster-join/
-        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@10.50.1.201:/opt/cluster-join/cacert-hash /opt/cluster-join/
-        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@10.50.1.201:/opt/cluster-join/cert-key /opt/cluster-join/
+        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@172.31.85.10:/opt/cluster-join/token /opt/cluster-join/
+        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@172.31.85.10:/opt/cluster-join/cacert-hash /opt/cluster-join/
+        scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o NoHostAuthenticationForLocalhost=yes -i /home/core/.ssh/coreos-key core@172.31.85.10:/opt/cluster-join/cert-key /opt/cluster-join/
 
         FILE=/opt/cluster-join/token
         if test -f "$FILE"; then
@@ -57,7 +57,7 @@ cp /opt/configs/kube-controller-manager.yaml /etc/kubernetes/manifests/kube-cont
 sudo -u core mkdir -p /home/core/.kube
 sudo -u core sudo cp -i /etc/kubernetes/admin.conf /home/core/.kube/config
 sudo -u core sudo chown core:core /home/core/.kube/config
-sudo -u core kubectl taint nodes --all node-role.kubernetes.io/master-
+#sudo -u core kubectl taint nodes --all node-role.kubernetes.io/master-
 sudo -u core /opt/get_helm.sh
 
 

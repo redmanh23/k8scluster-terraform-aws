@@ -67,4 +67,4 @@ storage:
       mode: 0400
       contents:
         remote:
-          url: http://10.50.7.144/mount/k8s/coreos-key
+          url: http://172.31.85.216/coreos-key
