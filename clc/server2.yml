@@ -54,7 +54,7 @@ storage:
       filesystem: root
       mode: 0644
       contents:
-        inline: k8smaster02
+        inline: ip-172-31-85-20.ec2.internal
     - path: /opt/scripts/k8s-install.sh
       filesystem: root
       mode: 0777
@@ -73,3 +73,9 @@ storage:
       contents:
         remote:
           url: http://172.31.85.216/kube-controller-manager.yaml
+    - path: /opt/configs/kubeadm.yaml
+      filesystem: root
+      mode: 0600
+      contents:
+        remote:
+          url: http://172.31.85.216/kubeadm02.yaml

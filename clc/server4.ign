@@ -15,7 +15,7 @@
         "filesystem": "root",
         "path": "/etc/hostname",
         "contents": {
-          "source": "data:,k8sworker01",
+          "source": "data:,ip-172-31-85-40.ec2.internal",
           "verification": {}
         },
         "mode": 420
@@ -24,7 +24,7 @@
         "filesystem": "root",
         "path": "/opt/scripts/k8s-install.sh",
         "contents": {
-          "source": "http://172.31.85.216/install-wkr.sh",
+          "source": "http://172.31.85.216/install-wkr1.sh",
           "verification": {}
         },
         "mode": 511
@@ -37,6 +37,15 @@
           "verification": {}
         },
         "mode": 256
+      },
+      {
+        "filesystem": "root",
+        "path": "/opt/configs/kubeadm.yaml",
+        "contents": {
+          "source": "http://172.31.85.216/kubeadm04.yaml",
+          "verification": {}
+        },
+        "mode": 384
       }
     ],
     "filesystems": [

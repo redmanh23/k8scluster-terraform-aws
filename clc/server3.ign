@@ -15,7 +15,7 @@
         "filesystem": "root",
         "path": "/etc/hostname",
         "contents": {
-          "source": "data:,k8smaster03",
+          "source": "data:,ip-172-31-85-30.ec2.internal",
           "verification": {}
         },
         "mode": 420
@@ -43,6 +43,15 @@
         "path": "/opt/configs/kube-controller-manager.yaml",
         "contents": {
           "source": "http://172.31.85.216/kube-controller-manager.yaml",
+          "verification": {}
+        },
+        "mode": 384
+      },
+      {
+        "filesystem": "root",
+        "path": "/opt/configs/kubeadm.yaml",
+        "contents": {
+          "source": "http://172.31.85.216/kubeadm03.yaml",
           "verification": {}
         },
         "mode": 384

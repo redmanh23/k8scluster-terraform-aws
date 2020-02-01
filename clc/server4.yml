@@ -55,16 +55,22 @@ storage:
       filesystem: root
       mode: 0644
       contents:
-        inline: k8sworker01
+        inline: ip-172-31-85-40.ec2.internal
     - path: /opt/scripts/k8s-install.sh
       filesystem: root
       mode: 0777
       contents:
         remote:
-          url: http://172.31.85.216/install-wkr.sh
+          url: http://172.31.85.216/install-wkr1.sh
     - path: /home/core/.ssh/coreos-key
       filesystem: root
       mode: 0400
       contents:
         remote:
           url: http://172.31.85.216/coreos-key
+    - path: /opt/configs/kubeadm.yaml
+      filesystem: root
+      mode: 0600
+      contents:
+        remote:
+          url: http://172.31.85.216/kubeadm04.yaml
