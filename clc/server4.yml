@@ -1,6 +1,12 @@
 ---
 systemd:
   units:
+    - name: kubelet.service
+      dropins:
+        - name: 20-cloud-provider.conf
+          contents: |
+            [Service]
+            Environment="KUBELET_EXTRA_ARGS=--cloud-provider=aws"
     - name: locksmithd.service
       dropins:
         - name: 40-etcd-lock.conf
@@ -68,7 +74,7 @@ storage:
       contents:
         remote:
           url: http://172.31.85.216/coreos-key
-    - path: /opt/configs/kubeadm.yaml
+    - path: /opt/configs/kubeadm-tmpl.yaml
       filesystem: root
       mode: 0600
       contents:

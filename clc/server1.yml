@@ -1,6 +1,12 @@
 ---
 systemd:
   units:
+    - name: kubelet.service
+      dropins:
+        - name: 20-cloud-provider.conf
+          contents: |
+            [Service]
+            Environment="KUBELET_EXTRA_ARGS=--cloud-provider=aws"
     - name: locksmithd.service
       dropins:
         - name: 40-etcd-lock.conf
@@ -99,3 +105,9 @@ storage:
       contents:
         remote:
           url: http://172.31.85.216/kubeadm01.yaml
+    - path: /opt/get_helm.sh
+      filesystem: root
+      mode: 0777
+      contents:
+        remote:
+          url: http://172.31.85.216/get_helm.sh

@@ -40,7 +40,7 @@
       },
       {
         "filesystem": "root",
-        "path": "/opt/configs/kubeadm.yaml",
+        "path": "/opt/configs/kubeadm-tmpl.yaml",
         "contents": {
           "source": "http://172.31.85.216/kubeadm06.yaml",
           "verification": {}
@@ -61,6 +61,15 @@
   },
   "systemd": {
     "units": [
+      {
+        "dropins": [
+          {
+            "contents": "[Service]\nEnvironment=\"KUBELET_EXTRA_ARGS=--cloud-provider=aws\"\n",
+            "name": "20-cloud-provider.conf"
+          }
+        ],
+        "name": "kubelet.service"
+      },
       {
         "dropins": [
           {
